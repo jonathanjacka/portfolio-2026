@@ -8,12 +8,18 @@ export interface IconProps {
   href: string;
   icon: IconDefinition;
   size: SizeProp;
+  name: string;
   key?: string;
 }
 
 const SocialIcon = (props: IconProps) => {
   return (
-    <a href={props.href} target='_blank' rel='noreferrer'>
+    <a
+      href={props.href}
+      target='_blank'
+      rel='noreferrer'
+      aria-label={`Visit ${props.name} profile`}
+    >
       <i className='footer-icon text-base-content/70 hover:text-base-content transition-colors'>
         <FontAwesomeIcon icon={props.icon} size={props.size || '1x'} />
       </i>

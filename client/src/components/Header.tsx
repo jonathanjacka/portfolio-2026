@@ -82,6 +82,7 @@ const Header: React.FC = () => {
                   href: item.href,
                   icon: item.icon,
                   size: item.size as SizeProp,
+                  name: item.name,
                 })}
               </div>
             ))}
@@ -148,6 +149,7 @@ const Header: React.FC = () => {
                               href: item.href,
                               icon: item.icon,
                               size: item.size as SizeProp,
+                              name: item.name,
                             })}
                             <span className='text-base-content/70'>{item.name}</span>
                           </div>

@@ -9,20 +9,21 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 px-4">
+    <section aria-label="Introduction" className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 px-4">
       <div
-        className={`shrink-0 transition-transform duration-1000 ease-out ${showText ? 'translate-x-0' : 'sm:translate-x-[calc(50%+1rem)]'
+        className={`shrink-0 transition-transform duration-1000 ease-out motion-reduce:transition-none ${showText ? 'translate-x-0' : 'sm:translate-x-[calc(50%+1rem)]'
           }`}
       >
         <img
-          className={`rounded-full ring-4 ring-primary h-32 w-32 sm:h-48 sm:w-48 lg:h-56 lg:w-56 object-cover transition-transform duration-1000 ease-out ${showText ? 'scale-100' : 'scale-110'
+          className={`rounded-full ring-4 ring-primary h-32 w-32 sm:h-48 sm:w-48 lg:h-56 lg:w-56 object-cover transition-transform duration-1000 ease-out motion-reduce:transition-none ${showText ? 'scale-100' : 'scale-110'
             }`}
           src="/jon1.jpg"
-          alt="Jonathan Jacka"
+          alt="Jonathan Jacka, Software Engineer"
         />
       </div>
       <div
-        className={`text-center sm:text-left max-w-md transition-all duration-1000 ease-out ${showText
+        aria-hidden={!showText}
+        className={`text-center sm:text-left max-w-md transition-all duration-1000 ease-out motion-reduce:transition-none ${showText
             ? 'opacity-100 translate-x-0'
             : 'opacity-0 sm:-translate-x-8 pointer-events-none'
           }`}
@@ -34,7 +35,7 @@ const Hero: React.FC = () => {
           I'm a software engineer and full stack developer. Ask me anything about my work experience, projects, or technical skills!
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 

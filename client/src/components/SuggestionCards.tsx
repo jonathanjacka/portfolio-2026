@@ -43,7 +43,9 @@ const SuggestionCards: React.FC<SuggestionCardsProps> = ({ onSelectPrompt }) => 
       {suggestions.map((suggestion) => (
         <button
           key={suggestion.id}
+          type='button'
           onClick={() => handleClick(suggestion)}
+          aria-label={`Ask: ${suggestion.prompt}`}
           className='bg-base-200 text-base-content p-3 sm:p-4 rounded-lg shadow-md w-32 sm:w-40 text-center cursor-pointer hover:bg-base-300 hover:scale-105 text-sm sm:text-base transition-all duration-200'
         >
           {suggestion.icon && <span className='block text-xl mb-1'>{suggestion.icon}</span>}

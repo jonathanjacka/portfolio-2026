@@ -7,6 +7,7 @@ const InputBar: React.FC = () => {
         <input
           type='text'
           placeholder='Ask me something...'
+          aria-label='Ask Jonathan a question'
           className='flex-1 border-none outline-none text-base sm:text-lg bg-transparent text-base-content placeholder:text-base-content/50 px-2'
         />
       </div>
