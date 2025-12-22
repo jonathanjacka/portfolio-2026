@@ -1,15 +1,14 @@
 import Header from '../components/Header';
+import Hero from '../components/Hero';
 import InputBar from '../components/InputBar';
 import SuggestionCards from '../components/SuggestionCards';
 
 const MainLayout: React.FC = () => {
   return (
-    <div className='flex h-screen overflow-x-hidden bg-base-100'>
-      <main className='flex-1 flex flex-col items-center justify-center relative w-full overflow-x-hidden'>
+    <div className='flex h-screen overflow-hidden bg-base-100'>
+      <main className='flex-1 flex flex-col items-center justify-center relative w-full'>
         <Header />
-        <h1 className='text-4xl font-extrabold bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-pink-500'>
-          Hi Charlotte!
-        </h1>
+        <Hero />
         <SuggestionCards />
         <InputBar />
       </main>
@@ -18,3 +17,4 @@ const MainLayout: React.FC = () => {
 };
 
 export default MainLayout;
+
