@@ -1,3 +1,4 @@
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import InputBar from '../components/InputBar';
@@ -11,6 +12,7 @@ const MainLayout: React.FC = () => {
         <Hero />
         <SuggestionCards />
         <InputBar />
+        <Footer />
       </main>
     </div>
   );
