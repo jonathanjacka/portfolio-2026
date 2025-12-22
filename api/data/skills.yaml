@@ -1,0 +1,87 @@
+# Technical Skills
+
+categories:
+  - name: Frontend
+    skills:
+      - name: React
+        level: expert
+        years: 5
+      - name: TypeScript
+        level: expert
+        years: 4
+      - name: Tailwind CSS
+        level: advanced
+        years: 3
+      - name: Material UI
+        level: advanced
+        years: 3
+      - name: Vite
+        level: advanced
+        years: 2
+      - name: HTML/CSS
+        level: expert
+        years: 6
+
+  - name: Backend
+    skills:
+      - name: Node.js
+        level: expert
+        years: 5
+      - name: GraphQL
+        level: advanced
+        years: 3
+      - name: PostgreSQL
+        level: advanced
+        years: 4
+      - name: Knex.js
+        level: advanced
+        years: 3
+      - name: SQLite
+        level: intermediate
+        years: 2
+
+  - name: AI & LLMs
+    skills:
+      - name: OpenAI SDK
+        level: advanced
+        years: 2
+      - name: LLM Integration
+        level: advanced
+        years: 2
+      - name: Model Context Protocol (MCP)
+        level: advanced
+        years: 1
+      - name: Agent Development
+        level: advanced
+        years: 1
+      - name: Prompt Engineering
+        level: advanced
+        years: 2
+
+  - name: Cloud & DevOps
+    skills:
+      - name: AWS
+        level: expert
+        years: 4
+        certifications: true
+      - name: Docker
+        level: expert
+        years: 3
+      - name: GitLab CI/CD
+        level: expert
+        years: 3
+      - name: Git
+        level: expert
+        years: 6
+
+  - name: Tools & Frameworks
+    skills:
+      - name: Tanstack Tools
+        level: intermediate
+        years: 2
+      - name: FastMCP (Python)
+        level: intermediate
+        years: 1
+      - name: Anthropic MCP SDK
+        level: intermediate
+        years: 1

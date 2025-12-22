@@ -1,0 +1,32 @@
+# Jonathan Jacka - Professional Profile
+
+name: Jonathan Jacka
+title: Software Engineer | Full Stack Web Developer
+location: Chicago, IL
+linkedin: https://www.linkedin.com/in/jonathanjacka/
+github: https://github.com/jonathanjacka
+
+bio: |
+  I'm a software engineer with a unique background in education. Originally from Cape Town, 
+  South Africa, I moved to Chicago in 2012. After several years as a teacher in Chicago 
+  Public Schools, I transitioned into tech - first coaching entry-level engineers at a startup, 
+  and now building cloud integration solutions and autonomous agentic workflows at SAIC.
+  
+  My current focus is on building effective, customer-centric web applications and exploring 
+  how AI agents can solve real problems for users. I spend a lot of time working with LLMs, 
+  agent SDKs, and MCP (Model Context Protocol) clients and servers.
+
+interests:
+  - Building autonomous agentic workflows
+  - AI/LLM integration and prompt engineering
+  - Clean architecture and best practices
+  - Performance optimization
+  - Mentoring and coaching developers
+
+preferred_stack:
+  - Vite with TypeScript
+  - React with Tailwind CSS
+  - OpenAI SDK for AI integration
+  - Anthropic MCP SDK for Model Context Protocol
+  - PostgreSQL for production databases
+  - SQLite for rapid development

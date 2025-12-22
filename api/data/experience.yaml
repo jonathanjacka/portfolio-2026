@@ -1,0 +1,72 @@
+# Work Experience
+
+positions:
+  - company: SAIC
+    role: Software Engineer
+    location: Chicago, IL
+    start_date: 2023-01
+    end_date: present
+    highlights:
+      - Building autonomous agentic workflows that solve real problems for customers
+      - Designing and architecting AI agent solutions using LLMs and MCP servers
+      - Leading demos and presentations of AI patterns and implementations
+      - Working extensively with Model Context Protocol (MCP) clients and servers
+      - Planning, designing, and reflecting on agent architecture for practical problem-solving
+    technologies:
+      - LLMs
+      - AI Agent SDKs
+      - MCP (Model Context Protocol)
+      - TypeScript
+      - React
+      - Cloud Services
+
+  - company: SAIC
+    role: Software Developer
+    location: Chicago, IL
+    start_date: 2022-01
+    end_date: 2023-01
+    highlights:
+      - Developed customer-facing web applications with React and Material UI
+      - Built and maintained GraphQL APIs on the backend
+      - Managed database interactions using PostgreSQL and Knex.js
+      - Deployed and maintained applications on AWS cloud infrastructure
+      - Implemented CI/CD pipelines using GitLab
+    technologies:
+      - React
+      - Material UI
+      - GraphQL
+      - PostgreSQL
+      - Knex.js
+      - AWS
+      - GitLab CI/CD
+      - Docker
+
+  - company: Tech Startup
+    role: Technical Trainer & Coach
+    location: Chicago, IL
+    start_date: 2019-01
+    end_date: 2022-01
+    highlights:
+      - Trained and coached entry-level software engineers
+      - Developed curriculum and training materials
+      - Mentored developers from classroom to professional roles
+      - Transitioned from education into full-time software development
+    technologies:
+      - JavaScript
+      - React
+      - Node.js
+      - Teaching & Mentorship
+
+  - company: Chicago Public Schools
+    role: Teacher
+    location: Chicago, IL
+    start_date: 2012-01
+    end_date: 2019-01
+    highlights:
+      - Taught in Chicago Public Schools for several years
+      - Developed strong communication and presentation skills
+      - Built foundation for technical training and mentorship career
+    technologies:
+      - Curriculum Development
+      - Communication
+      - Mentorship

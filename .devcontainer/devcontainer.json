@@ -15,7 +15,6 @@
         "typescript.preferences.importModuleSpecifier": "relative",
         "typescript.suggest.autoImports": true,
         "editor.formatOnSave": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
           "source.fixAll.eslint": "explicit"
         }
@@ -34,5 +33,5 @@
   "runArgs": ["--env-file", "${localWorkspaceFolder}/.env"],
   "remoteUser": "node",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-  "forwardPorts": [5173]
+  "forwardPorts": [5173, 3001]
 }
