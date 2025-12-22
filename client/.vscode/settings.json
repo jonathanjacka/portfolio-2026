@@ -1,0 +1,8 @@
+{
+  "css.validate": false,
+  "stylelint.enable": true,
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "stylelint.vscode-stylelint"
+  ]
+}

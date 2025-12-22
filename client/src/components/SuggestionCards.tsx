@@ -8,7 +8,7 @@ const SuggestionCards: React.FC = () => {
       {suggestions.map((suggestion, index) => (
         <div
           key={index}
-          className='bg-white p-3 sm:p-4 rounded-lg shadow-md w-32 sm:w-40 text-center cursor-pointer hover:bg-gray-100 text-sm sm:text-base'
+          className='bg-base-200 text-base-content p-3 sm:p-4 rounded-lg shadow-md w-32 sm:w-40 text-center cursor-pointer hover:bg-base-300 text-sm sm:text-base transition-colors'
         >
           {suggestion}
         </div>
