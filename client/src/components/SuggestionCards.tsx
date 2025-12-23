@@ -34,8 +34,6 @@ const SuggestionCards: React.FC<SuggestionCardsProps> = ({ onSelectPrompt }) => 
     if (onSelectPrompt) {
       onSelectPrompt(suggestion.prompt);
     }
-    // TODO: Future - integrate with agent/chat context
-    console.log('Selected prompt:', suggestion.prompt);
   };
 
   return (
