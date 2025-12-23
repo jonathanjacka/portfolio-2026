@@ -20,14 +20,22 @@ interface Profile {
   interests?: string[];
 }
 
+interface Project {
+  name: string;
+  highlights: string[];
+  technologies: string[];
+}
+
 interface Position {
   company: string;
   role: string;
   location: string;
   start_date: string;
   end_date: string;
-  highlights: string[];
-  technologies: string[];
+  summary?: string;
+  highlights?: string[];
+  technologies?: string[];
+  projects?: Project[];
 }
 
 interface Experience {
@@ -47,6 +55,19 @@ interface SkillCategory {
 
 interface Skills {
   categories: SkillCategory[];
+}
+
+interface Degree {
+  degree: string;
+  field: string;
+  institution: string;
+  location: string;
+  start_date: string;
+  end_date: string;
+}
+
+interface Education {
+  degrees: Degree[];
 }
 
 interface GitHubRepo {
@@ -106,6 +127,7 @@ export async function buildAgentContext(): Promise<string> {
   const profile = loadYaml<Profile>('profile.yaml');
   const experience = loadYaml<Experience>('experience.yaml');
   const skills = loadYaml<Skills>('skills.yaml');
+  const education = loadYaml<Education>('education.yaml');
 
   // Get GitHub username from profile
   const githubUsername = profile?.github?.split('/').pop() || 'jonathanjacka';
@@ -128,17 +150,49 @@ export async function buildAgentContext(): Promise<string> {
     context += '\n';
   }
 
+  // Education section
+  if (education?.degrees?.length) {
+    context += '### Education\n';
+    for (const deg of education.degrees) {
+      context += `\n**${deg.degree}: ${deg.field}**\n`;
+      context += `${deg.institution}, ${deg.location}\n`;
+      context += `${deg.start_date} - ${deg.end_date}\n`;
+    }
+    context += '\n';
+  }
+
   // Experience section
   if (experience?.positions?.length) {
     context += '### Work Experience\n';
     for (const pos of experience.positions) {
       context += `\n**${pos.role}** at ${pos.company} (${pos.start_date} - ${pos.end_date})\n`;
       context += `Location: ${pos.location}\n`;
-      context += 'Key achievements:\n';
-      for (const highlight of pos.highlights) {
-        context += `- ${highlight}\n`;
+      if (pos.summary) {
+        context += `${pos.summary}\n`;
       }
-      context += `Technologies: ${pos.technologies.join(', ')}\n`;
+
+      // Handle positions with projects (new format)
+      if (pos.projects?.length) {
+        for (const project of pos.projects) {
+          context += `\n  **${project.name}**\n`;
+          context += '  Key achievements:\n';
+          for (const highlight of project.highlights) {
+            context += `  - ${highlight}\n`;
+          }
+          context += `  Technologies: ${project.technologies.join(', ')}\n`;
+        }
+      }
+
+      // Handle positions with direct highlights (legacy format)
+      if (pos.highlights?.length) {
+        context += 'Key achievements:\n';
+        for (const highlight of pos.highlights) {
+          context += `- ${highlight}\n`;
+        }
+      }
+      if (pos.technologies?.length) {
+        context += `Technologies: ${pos.technologies.join(', ')}\n`;
+      }
     }
     context += '\n';
   }

@@ -1,0 +1,16 @@
+# Education
+
+degrees:
+  - degree: Masters
+    field: Computer Science
+    institution: University of Illinois (Urbana-Champaign)
+    location: Urbana-Champaign, IL
+    start_date: 2019-08
+    end_date: 2022-05
+
+  - degree: Bachelors
+    field: Arts (English and History)
+    institution: University of Cape Town
+    location: Cape Town, South Africa
+    start_date: 2004-01
+    end_date: 2007-12

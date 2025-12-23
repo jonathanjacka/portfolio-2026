@@ -4,53 +4,73 @@ positions:
   - company: SAIC
     role: Software Engineer
     location: Chicago, IL
-    start_date: 2023-01
+    start_date: 2024-11
     end_date: present
-    highlights:
-      - Building autonomous agentic workflows that solve real problems for customers
-      - Designing and architecting AI agent solutions using LLMs and MCP servers
-      - Leading demos and presentations of AI patterns and implementations
-      - Working extensively with Model Context Protocol (MCP) clients and servers
-      - Planning, designing, and reflecting on agent architecture for practical problem-solving
-    technologies:
-      - LLMs
-      - AI Agent SDKs
-      - MCP (Model Context Protocol)
-      - TypeScript
-      - React
-      - Cloud Services
+    summary: Working across multiple teams and projects, progressing from full-stack web development to AI agentic workflows and solutions.
+    projects:
+      - name: AI & Agentic Solutions (2025 - present)
+        highlights:
+          - Building autonomous agentic workflows that solve real problems for customers
+          - Designing and architecting AI agent solutions using LLMs and MCP servers
+          - Leading demos and presentations of AI patterns and implementations
+          - Working extensively with Model Context Protocol (MCP) clients and servers
+          - Planning, designing, and reflecting on agent architecture for practical problem-solving
+        technologies:
+          - LLMs
+          - AI Agent SDKs
+          - MCP (Model Context Protocol)
+          - TypeScript
+          - React
+          - Cloud Services
+      - name: Full-Stack Web Development (2024 - 2025)
+        highlights:
+          - Developed customer-facing web applications with React and Material UI
+          - Built and maintained GraphQL APIs on the backend
+          - Managed database interactions using PostgreSQL and Knex.js
+          - Deployed and maintained applications on AWS cloud infrastructure
+          - Implemented CI/CD pipelines using GitLab
+        technologies:
+          - React
+          - Material UI
+          - GraphQL
+          - PostgreSQL
+          - Knex.js
+          - AWS
+          - GitLab CI/CD
+          - Docker
 
-  - company: SAIC
-    role: Software Developer
+  - company: CodeHS
+    role: Professional Development Specialist
+    location: Remote
+    start_date: 2024-03
+    end_date: 2024-10
+    summary: Web-based platform providing Computer Science curriculum, training, and professional development for K-12 students and teachers.
+    highlights:
+      - Developed and delivered trainings in AI applications for Education
+      - Collaborated with cross-functional engineering teams (design, product, engineering) to implement features of new navigation to platform for 2024
+      - Updated platform autograder tools and documentation by refactoring wrapper implementing Python testing suite
+      - Achieved average 4.9/5 on all feedback ratings for trainings
+      - Site-wide rollout of new navigation in July 2024
+      - Company-wide adoption of trainings and documentation for new navigation
+      - Increased engagements with autograder tools up 67% in 1 month
+    technologies:
+      - JavaScript
+      - Python
+      - AI/ML
+      - Curriculum Development
+      - Technical Training
+
+  - company: Multiverse.io
+    role: Software Engineer Instructor & Coach
     location: Chicago, IL
     start_date: 2022-01
-    end_date: 2023-01
+    end_date: 2023-12
     highlights:
-      - Developed customer-facing web applications with React and Material UI
-      - Built and maintained GraphQL APIs on the backend
-      - Managed database interactions using PostgreSQL and Knex.js
-      - Deployed and maintained applications on AWS cloud infrastructure
-      - Implemented CI/CD pipelines using GitLab
-    technologies:
-      - React
-      - Material UI
-      - GraphQL
-      - PostgreSQL
-      - Knex.js
-      - AWS
-      - GitLab CI/CD
-      - Docker
-
-  - company: Tech Startup
-    role: Technical Trainer & Coach
-    location: Chicago, IL
-    start_date: 2019-01
-    end_date: 2022-01
-    highlights:
-      - Trained and coached entry-level software engineers
-      - Developed curriculum and training materials
+      - Trained new software engineers at Google, Amex, Expedia, and Warner Music Group during 15 month apprenticeship program
+      - Continuously supported engineers with pair-programming, code-reviews, refactoring, and troubleshooting of their day-to-day coding work
+      - Collaborated with cross-functional teams (design, product, partnerships) to develop curriculum and training materials
       - Mentored developers from classroom to professional roles
-      - Transitioned from education into full-time software development
+      - Reported to client tech leads, managers, and directors on performance
     technologies:
       - JavaScript
       - React
@@ -61,12 +81,13 @@ positions:
     role: Teacher
     location: Chicago, IL
     start_date: 2012-01
-    end_date: 2019-01
+    end_date: 2022-01
     highlights:
-      - Taught in Chicago Public Schools for several years
+      - Taught Computer Science in Chicago Public Schools for several years
       - Developed strong communication and presentation skills
       - Built foundation for technical training and mentorship career
     technologies:
+      - Computer Science
       - Curriculum Development
       - Communication
       - Mentorship
