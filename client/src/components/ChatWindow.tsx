@@ -21,18 +21,17 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ exchanges }) => {
   }, [exchanges.length]);
 
   return (
-    <div ref={containerRef} className="flex-1 w-full max-w-3xl overflow-y-auto px-4 py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div ref={containerRef} className="flex-1 w-full max-w-3xl overflow-y-auto px-4 pt-12 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mask-[linear-gradient(to_bottom,transparent_0%,black_8%,black_92%,transparent_100%)]">
       <div className="flex flex-col gap-6">
         {exchanges.map((exchange, index) => {
           const isLast = index === exchanges.length - 1;
+
 
           return (
             <div
               key={exchange.id}
               ref={isLast ? scrollRef : null}
-              className={`flex flex-col gap-4 transition-[min-height] duration-500 ease-out animate-in fade-in slide-in-from-bottom-4 duration-600 ${
-                // Only the last item gets the min-height to ensure scroll space
-                isLast ? 'min-h-[60vh]' : 'min-h-0'
+              className={`flex flex-col gap-4 transition-[min-height] duration-500 ease-out ${isLast ? 'min-h-[60vh]' : 'min-h-0'
                 }`}
             >
               {/* User message */}
