@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Hero from '../components/Hero';
 import InputBar from '../components/InputBar';
 import SuggestionCards from '../components/SuggestionCards';
+import { useKeyboardHeight } from '../hooks/useKeyboardHeight';
 import type { ChatExchange } from '../types/chat';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
@@ -12,6 +13,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 const MainLayout: React.FC = () => {
   const [exchanges, setExchanges] = useState<ChatExchange[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const keyboardHeight = useKeyboardHeight();
   const isChatActive = exchanges.length > 0;
 
   const handleResetChat = () => {
@@ -96,7 +98,7 @@ const MainLayout: React.FC = () => {
   };
 
   return (
-    <div className='flex h-screen overflow-hidden bg-base-100'>
+    <div className='flex h-dvh overflow-hidden bg-base-100'>
       <main className='flex-1 flex flex-col items-center relative w-full'>
         <Header isChatActive={isChatActive} onResetChat={handleResetChat} />
 
@@ -122,9 +124,12 @@ const MainLayout: React.FC = () => {
           <ChatWindow exchanges={exchanges} />
         </div>
 
-        {/* Input Bar - fixed at bottom in chat mode */}
+        {/* Input Bar - fixed at bottom in chat mode, adjusts for keyboard */}
         {isChatActive && (
-          <div className='fixed bottom-16 left-0 right-0 flex justify-center bg-base-100/80 backdrop-blur-sm py-2'>
+          <div
+            className='fixed left-0 right-0 flex justify-center bg-base-100/80 backdrop-blur-sm py-2 transition-[bottom] duration-150'
+            style={{ bottom: keyboardHeight > 0 ? keyboardHeight : 64 }}
+          >
             <InputBar onSubmit={handleSendMessage} disabled={isLoading} />
           </div>
         )}
