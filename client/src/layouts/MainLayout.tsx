@@ -5,105 +5,127 @@ import Header from '../components/Header';
 import Hero from '../components/Hero';
 import InputBar from '../components/InputBar';
 import SuggestionCards from '../components/SuggestionCards';
-import type { Message } from '../types/chat';
+import type { ChatExchange } from '../types/chat';
 
-// Dummy responses for testing chat view
-const dummyResponses: Record<string, string> = {
-  experience: `I have over 5 years of experience as a Software Engineer, working across startups and enterprise companies. 
-
-My journey started at a fintech startup where I built payment processing systems, then moved to a larger tech company where I led frontend development for their customer-facing applications.
-
-I specialize in full-stack development with React, Node.js, and cloud technologies.`,
-  project: `One of my recent projects was building a real-time collaboration platform similar to Notion.
-
-Key highlights:
-• Built with React, TypeScript, and WebSockets
-• Implemented operational transformation for conflict-free editing
-• Scaled to handle 10,000+ concurrent users
-• Reduced load time by 40% through code splitting and lazy loading`,
-  skills: `My technical skills span the full stack:
-
-**Frontend:** React, TypeScript, Next.js, Tailwind CSS
-**Backend:** Node.js, Python, PostgreSQL, MongoDB
-**Cloud:** AWS, GCP, Docker, Kubernetes
-**Tools:** Git, CI/CD, Agile methodologies
-
-I'm passionate about clean code, performance optimization, and building great user experiences.`,
-  default: `Thanks for your question! I'd be happy to tell you more about my experience. 
-
-Feel free to ask about my work history, specific projects I've worked on, or my technical skills. I'm here to help!`,
-};
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 const MainLayout: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const isChatActive = messages.length > 0;
+  const [exchanges, setExchanges] = useState<ChatExchange[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const isChatActive = exchanges.length > 0;
 
-  const getDummyResponse = (content: string): string => {
-    const lowerContent = content.toLowerCase();
-    if (lowerContent.includes('experience') || lowerContent.includes('work')) {
-      return dummyResponses.experience;
-    }
-    if (lowerContent.includes('project')) {
-      return dummyResponses.project;
-    }
-    if (lowerContent.includes('skill') || lowerContent.includes('technical')) {
-      return dummyResponses.skills;
-    }
-    return dummyResponses.default;
+  const handleResetChat = () => {
+    setExchanges([]);
+    setIsLoading(false);
   };
 
-  const handleSendMessage = (content: string) => {
-    const userMessage: Message = {
-      id: `user-${Date.now()}`,
-      role: 'user',
-      content,
+  const handleSendMessage = async (content: string) => {
+    // Create new exchange
+    const exchangeId = `exchange-${Date.now()}`;
+    const newExchange: ChatExchange = {
+      id: exchangeId,
+      userMessage: content,
+      assistantResponse: '',
+      isStreaming: true,
       timestamp: new Date(),
     };
-    setMessages((prev) => [...prev, userMessage]);
 
-    // Simulate assistant response with dummy data
-    setTimeout(() => {
-      const assistantMessage: Message = {
-        id: `assistant-${Date.now()}`,
-        role: 'assistant',
-        content: getDummyResponse(content),
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, assistantMessage]);
-    }, 800);
+    setExchanges((prev) => [...prev, newExchange]);
+    setIsLoading(true);
+
+    try {
+      // Build messages array for API from all exchanges
+      const apiMessages = exchanges.flatMap((ex) => [
+        { role: 'user' as const, content: ex.userMessage },
+        { role: 'assistant' as const, content: ex.assistantResponse },
+      ]).concat({ role: 'user' as const, content });
+
+      const response = await fetch(`${API_URL}/api/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ messages: apiMessages }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response');
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+
+      if (!reader) {
+        throw new Error('No response body');
+      }
+
+      let fullContent = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        fullContent += chunk;
+
+        // Update the exchange with streamed content
+        setExchanges((prev) =>
+          prev.map((ex) =>
+            ex.id === exchangeId ? { ...ex, assistantResponse: fullContent } : ex
+          )
+        );
+      }
+
+      // Mark streaming complete
+      setExchanges((prev) =>
+        prev.map((ex) =>
+          ex.id === exchangeId ? { ...ex, isStreaming: false } : ex
+        )
+      );
+    } catch (error) {
+      console.error('Chat error:', error);
+      setExchanges((prev) =>
+        prev.map((ex) =>
+          ex.id === exchangeId
+            ? { ...ex, assistantResponse: 'Sorry, I encountered an error. Please try again.', isStreaming: false }
+            : ex
+        )
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className='flex h-screen overflow-hidden bg-base-100'>
       <main className='flex-1 flex flex-col items-center relative w-full'>
-        <Header />
+        <Header isChatActive={isChatActive} onResetChat={handleResetChat} />
 
         {/* Landing View */}
         <div
           className={`flex-1 flex flex-col items-center justify-center w-full transition-all duration-500 ease-out ${isChatActive
-              ? 'opacity-0 scale-95 absolute pointer-events-none'
-              : 'opacity-100 scale-100'
+            ? 'opacity-0 scale-95 absolute pointer-events-none'
+            : 'opacity-100 scale-100'
             }`}
         >
           <Hero />
           <SuggestionCards onSelectPrompt={handleSendMessage} />
-          <InputBar onSubmit={handleSendMessage} />
+          <InputBar onSubmit={handleSendMessage} disabled={isLoading} />
         </div>
 
-        {/* Chat View */}
+        {/* Chat View - contained within viewport */}
         <div
-          className={`flex-1 flex flex-col items-center w-full pt-20 pb-32 transition-all duration-500 ease-out ${isChatActive
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 translate-y-8 absolute pointer-events-none'
+          className={`flex-1 flex flex-col items-center w-full pt-20 pb-40 overflow-hidden transition-all duration-500 ease-out ${isChatActive
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-8 absolute pointer-events-none'
             }`}
         >
-          <ChatWindow messages={messages} />
+          <ChatWindow exchanges={exchanges} />
         </div>
 
         {/* Input Bar - fixed at bottom in chat mode */}
         {isChatActive && (
           <div className='fixed bottom-16 left-0 right-0 flex justify-center bg-base-100/80 backdrop-blur-sm py-2'>
-            <InputBar onSubmit={handleSendMessage} />
+            <InputBar onSubmit={handleSendMessage} disabled={isLoading} />
           </div>
         )}
 

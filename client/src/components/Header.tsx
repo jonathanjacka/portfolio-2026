@@ -40,11 +40,77 @@ const navigation = [
     component: (props: IconProps) => <SocialIcon {...props} />,
   },
 ];
-const Header: React.FC = () => {
+
+interface HeaderProps {
+  isChatActive?: boolean;
+  onResetChat?: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ isChatActive = false, onResetChat }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isChatActive && onResetChat) {
+      setShowResetConfirm(true);
+    }
+  };
+
+  const handleConfirmReset = () => {
+    onResetChat?.();
+    setShowResetConfirm(false);
+  };
 
   return (
     <div className='bg-base-100'>
+      {/* Reset Confirmation Modal */}
+      <Transition show={showResetConfirm}>
+        <Dialog as='div' className='relative z-60' onClose={() => setShowResetConfirm(false)}>
+          <TransitionChild
+            enter='ease-out duration-200'
+            enterFrom='opacity-0'
+            enterTo='opacity-100'
+            leave='ease-in duration-150'
+            leaveFrom='opacity-100'
+            leaveTo='opacity-0'
+          >
+            <div className='fixed inset-0 bg-gray-900/50 backdrop-blur-sm' />
+          </TransitionChild>
+          <div className='fixed inset-0 flex items-center justify-center p-4'>
+            <TransitionChild
+              enter='ease-out duration-200'
+              enterFrom='opacity-0 scale-95'
+              enterTo='opacity-100 scale-100'
+              leave='ease-in duration-150'
+              leaveFrom='opacity-100 scale-100'
+              leaveTo='opacity-0 scale-95'
+            >
+              <DialogPanel className='bg-base-100 rounded-2xl p-6 shadow-xl max-w-sm w-full'>
+                <h3 className='text-lg font-semibold text-base-content mb-2'>Start new conversation?</h3>
+                <p className='text-sm text-base-content/70 mb-6'>
+                  This will clear the current chat and return to the home screen.
+                </p>
+                <div className='flex gap-3 justify-end'>
+                  <button
+                    className='btn btn-ghost'
+                    onClick={() => setShowResetConfirm(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className='btn btn-primary'
+                    onClick={handleConfirmReset}
+                  >
+                    Start fresh
+                  </button>
+                </div>
+              </DialogPanel>
+            </TransitionChild>
+          </div>
+        </Dialog>
+      </Transition>
+
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all ease-in delay-150`}
       >
@@ -53,14 +119,18 @@ const Header: React.FC = () => {
           aria-label='Global'
         >
           <div className='flex lg:flex-1'>
-            <a className='-m-1.5 p-1.5 cursor-pointer' href='#home'>
-              <span className='sr-only'>Jonathan Jacka</span>
+            <button
+              className='-m-1.5 p-1.5 cursor-pointer group relative'
+              onClick={handleLogoClick}
+              title={isChatActive ? 'Return to start' : undefined}
+            >
+              <span className='sr-only'>Jonathan Jacka - Return to start</span>
               <img
-                className='h-10 sm:h-12 w-auto max-w-full'
+                className='h-10 sm:h-12 w-auto max-w-full transition-transform group-hover:scale-105'
                 src='/iconJ.png'
                 alt='logo'
               />
-            </a>
+            </button>
           </div>
           <div className='flex lg:hidden'>
             <button
