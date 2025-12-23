@@ -9,18 +9,12 @@ const InputBar: React.FC<InputBarProps> = ({ onSubmit, disabled = false }) => {
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-focus input when enabled, but only on desktop to avoid mobile keyboard popup
+  // Auto-focus input when it becomes enabled
   useEffect(() => {
     if (!disabled && inputRef.current) {
-      // Check if we're on mobile (screen width < 640px or touch device)
-      const isMobile = window.matchMedia('(max-width: 639px)').matches ||
-        ('ontouchstart' in window);
-      if (!isMobile) {
-        inputRef.current.focus();
-      }
+      inputRef.current.focus();
     }
   }, [disabled]);
-
   const handleSubmit = () => {
     const trimmed = inputValue.trim();
     if (trimmed && onSubmit && !disabled) {
