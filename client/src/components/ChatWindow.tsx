@@ -21,7 +21,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ exchanges }) => {
   }, [exchanges.length]);
 
   return (
-    <div ref={containerRef} className="flex-1 w-full max-w-3xl overflow-y-auto px-4 pt-12 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mask-[linear-gradient(to_bottom,transparent_0%,black_8%,black_92%,transparent_100%)]">
+    <div ref={containerRef} className="flex-1 w-full max-w-3xl overflow-y-auto px-4 pt-8 sm:pt-12 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mask-[linear-gradient(to_bottom,transparent_0%,black_4%,black_96%,transparent_100%)] sm:mask-[linear-gradient(to_bottom,transparent_0%,black_8%,black_92%,transparent_100%)]">
       <div className="flex flex-col gap-6">
         {exchanges.map((exchange, index) => {
           const isLast = index === exchanges.length - 1;

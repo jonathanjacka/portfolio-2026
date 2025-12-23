@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import Hero from '../components/Hero';
 import InputBar from '../components/InputBar';
 import SuggestionCards from '../components/SuggestionCards';
-import { useKeyboardHeight } from '../hooks/useKeyboardHeight';
 import type { ChatExchange } from '../types/chat';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
@@ -13,7 +12,6 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 const MainLayout: React.FC = () => {
   const [exchanges, setExchanges] = useState<ChatExchange[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const keyboardHeight = useKeyboardHeight();
   const isChatActive = exchanges.length > 0;
 
   const handleResetChat = () => {
@@ -98,44 +96,38 @@ const MainLayout: React.FC = () => {
   };
 
   return (
-    <div className='flex h-dvh overflow-hidden bg-base-100'>
-      <main className='flex-1 flex flex-col items-center relative w-full'>
-        <Header isChatActive={isChatActive} onResetChat={handleResetChat} />
+    <div className='flex flex-col h-dvh bg-base-100'>
+      <Header isChatActive={isChatActive} onResetChat={handleResetChat} />
 
-        {/* Landing View */}
-        <div
-          className={`flex-1 flex flex-col items-center justify-center w-full transition-all duration-500 ease-out ${isChatActive
-            ? 'opacity-0 scale-95 absolute pointer-events-none'
-            : 'opacity-100 scale-100'
-            }`}
-        >
-          <Hero />
-          <SuggestionCards onSelectPrompt={handleSendMessage} />
-          <InputBar onSubmit={handleSendMessage} disabled={isLoading} />
-        </div>
+      {/* Landing View */}
+      <div
+        className={`flex-1 flex flex-col items-center justify-center w-full overflow-hidden transition-all duration-500 ease-out ${isChatActive
+          ? 'opacity-0 scale-95 absolute pointer-events-none'
+          : 'opacity-100 scale-100'
+          }`}
+      >
+        <Hero />
+        <SuggestionCards onSelectPrompt={handleSendMessage} />
+        <InputBar onSubmit={handleSendMessage} disabled={isLoading} />
+      </div>
 
-        {/* Chat View - contained within viewport */}
-        <div
-          className={`flex-1 flex flex-col items-center w-full pt-20 pb-40 overflow-hidden transition-all duration-500 ease-out ${isChatActive
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 translate-y-8 absolute pointer-events-none'
-            }`}
-        >
-          <ChatWindow exchanges={exchanges} />
-        </div>
+      {/* Chat View - flexbox layout keeps input at bottom */}
+      {isChatActive && (
+        <div className='flex-1 flex flex-col w-full overflow-hidden'>
+          {/* Chat messages - scrollable */}
+          <div className='flex-1 overflow-hidden flex justify-center'>
+            <ChatWindow exchanges={exchanges} />
+          </div>
 
-        {/* Input Bar - fixed at bottom in chat mode, adjusts for keyboard */}
-        {isChatActive && (
-          <div
-            className='fixed left-0 right-0 flex justify-center bg-base-100/80 backdrop-blur-sm py-2 transition-[bottom] duration-150'
-            style={{ bottom: keyboardHeight > 0 ? keyboardHeight : 64 }}
-          >
+          {/* Input Bar - stays at bottom as flex child */}
+          <div className='shrink-0 flex justify-center bg-base-100/95 backdrop-blur-sm py-2 px-4 border-t border-base-200'>
             <InputBar onSubmit={handleSendMessage} disabled={isLoading} />
           </div>
-        )}
+        </div>
+      )}
 
-        <Footer />
-      </main>
+      {/* Footer only shows on landing */}
+      {!isChatActive && <Footer />}
     </div>
   );
 };
