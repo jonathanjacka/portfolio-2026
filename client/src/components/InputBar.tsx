@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface InputBarProps {
   onSubmit?: (message: string) => void;
@@ -7,7 +7,14 @@ interface InputBarProps {
 
 const InputBar: React.FC<InputBarProps> = ({ onSubmit, disabled = false }) => {
   const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  // Auto-focus input when it becomes enabled
+  useEffect(() => {
+    if (!disabled && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [disabled]);
   const handleSubmit = () => {
     const trimmed = inputValue.trim();
     if (trimmed && onSubmit && !disabled) {
@@ -27,6 +34,7 @@ const InputBar: React.FC<InputBarProps> = ({ onSubmit, disabled = false }) => {
     <div className='mt-8 w-full max-w-2xl px-4 sm:px-6'>
       <div className='bg-base-200 p-3 sm:p-4 rounded-full shadow-md flex items-center'>
         <input
+          ref={inputRef}
           type='text'
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
