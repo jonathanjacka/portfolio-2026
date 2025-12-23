@@ -93,13 +93,13 @@ const Header: React.FC<HeaderProps> = ({ isChatActive = false, onResetChat }) =>
                 </p>
                 <div className='flex gap-3 justify-end'>
                   <button
-                    className='btn btn-ghost btn-sm'
+                    className='btn btn-ghost'
                     onClick={() => setShowResetConfirm(false)}
                   >
                     Cancel
                   </button>
                   <button
-                    className='btn btn-primary btn-sm'
+                    className='btn btn-primary'
                     onClick={handleConfirmReset}
                   >
                     Start fresh
