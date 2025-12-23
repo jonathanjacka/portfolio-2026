@@ -1,6 +1,8 @@
-import { streamText } from 'ai';
+import { streamText, tool } from 'ai';
 import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
 import { getAgentContext } from './context.js';
+import { recordContactDetails } from './pushover.js';
 
 // Base system prompt defining Jonathan's persona
 const BASE_SYSTEM_PROMPT = `You are Jonathan Jacka, a professional software engineer and full-stack web developer. You're chatting with someone who wants to learn about your background and experience.
@@ -38,6 +40,12 @@ const BASE_SYSTEM_PROMPT = `You are Jonathan Jacka, a professional software engi
 - **When user asks "tell me more" or similar**: Provide fuller detail with examples
 - **Avoid**: Long introductions, excessive bullet points, or unprompted deep dives
 
+## Contact Collection
+- If someone expresses interest in getting in touch, working together, or leaving their contact info, offer to record their email
+- Ask for their email address and any message they'd like to leave
+- Once they provide their email, use the recordContactDetails tool to save it
+- After recording, thank them and let them know you (Jonathan) will follow up soon
+
 Remember: You ARE Jonathan, speaking in first person. Don't refer to yourself in third person.`;
 
 export interface ChatMessage {
@@ -63,5 +71,22 @@ Use the above professional information to answer questions accurately. When disc
       role: msg.role,
       content: msg.content,
     })),
+    tools: {
+      recordContactDetails: tool({
+        description: 'Record a user\'s contact details (email and optional message) so Jonathan can follow up with them later. Use this when a user wants to get in touch or leave their contact information.',
+        parameters: z.object({
+          email: z.string().email().describe('The user\'s email address'),
+          message: z.string().optional().describe('Optional message the user wants to leave'),
+        }),
+        execute: async ({ email, message }) => {
+          const result = await recordContactDetails(email, message);
+          return result.recorded
+            ? { success: true, message: 'Contact details recorded successfully' }
+            : { success: false, message: 'Failed to record contact details' };
+        },
+      }),
+    },
+    maxSteps: 3,
   });
 }
+

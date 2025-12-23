@@ -21,7 +21,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "js-yaml": "^4.1.1",
-    "pdf-parse": "^2.4.5"
+    "pdf-parse": "^2.4.5",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
