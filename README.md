@@ -96,8 +96,31 @@ See `.env.example` for all available options:
 | `GITHUB_TOKEN` | No | GitHub token for higher API rate limits |
 | `PUSHOVER_USER` | No | Pushover user key for contact notifications |
 | `PUSHOVER_TOKEN` | No | Pushover app token for contact notifications |
-| `CLIENT_URL` | No | Frontend URL for CORS (default: http://localhost:5173) |
+| `CLIENT_URL` | No | Frontend URL(s) for CORS, comma-separated |
 | `PORT` | No | API server port (default: 3001) |
+| `VITE_API_URL` | No | API URL for client (set during Netlify build) |
+
+## Deployment
+
+### Railway (API)
+
+1. Connect your GitHub repo to Railway
+2. Set root directory to `api`
+3. Add environment variables:
+   - `OPENAI_API_KEY` (required)
+   - `CLIENT_URL` = your Netlify URL
+   - `PUSHOVER_USER`, `PUSHOVER_TOKEN` (optional)
+   - `GITHUB_TOKEN` (optional)
+4. Railway auto-detects Node.js and runs `npm run build` then `npm start`
+
+### Netlify (Client)
+
+1. Connect your GitHub repo to Netlify
+2. Set base directory to `client`
+3. Build command: `npm run build`
+4. Publish directory: `dist`
+5. Add environment variable:
+   - `VITE_API_URL` = your Railway API URL
 
 ## Customization
 
@@ -113,6 +136,7 @@ Edit the system prompt in `api/src/agent.ts` to change:
 1. **Profile** (`api/data/profile.yaml`): Basic info and bio
 2. **Experience** (`api/data/experience.yaml`): Work history with highlights
 3. **Skills** (`api/data/skills.yaml`): Technical skills by category
+4. **Education** (`api/data/education.yaml`): Degrees and institutions
 
 The agent automatically pulls your recent GitHub repos for context.
 
