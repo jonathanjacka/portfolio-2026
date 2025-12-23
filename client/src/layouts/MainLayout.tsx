@@ -14,6 +14,11 @@ const MainLayout: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const isChatActive = exchanges.length > 0;
 
+  const handleResetChat = () => {
+    setExchanges([]);
+    setIsLoading(false);
+  };
+
   const handleSendMessage = async (content: string) => {
     // Create new exchange
     const exchangeId = `exchange-${Date.now()}`;
@@ -93,13 +98,13 @@ const MainLayout: React.FC = () => {
   return (
     <div className='flex h-screen overflow-hidden bg-base-100'>
       <main className='flex-1 flex flex-col items-center relative w-full'>
-        <Header />
+        <Header isChatActive={isChatActive} onResetChat={handleResetChat} />
 
         {/* Landing View */}
         <div
           className={`flex-1 flex flex-col items-center justify-center w-full transition-all duration-500 ease-out ${isChatActive
-              ? 'opacity-0 scale-95 absolute pointer-events-none'
-              : 'opacity-100 scale-100'
+            ? 'opacity-0 scale-95 absolute pointer-events-none'
+            : 'opacity-100 scale-100'
             }`}
         >
           <Hero />
@@ -110,8 +115,8 @@ const MainLayout: React.FC = () => {
         {/* Chat View - contained within viewport */}
         <div
           className={`flex-1 flex flex-col items-center w-full pt-20 pb-40 overflow-hidden transition-all duration-500 ease-out ${isChatActive
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 translate-y-8 absolute pointer-events-none'
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-8 absolute pointer-events-none'
             }`}
         >
           <ChatWindow exchanges={exchanges} />
