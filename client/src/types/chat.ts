@@ -4,3 +4,11 @@ export interface Message {
   content: string;
   timestamp: Date;
 }
+
+export interface ChatExchange {
+  id: string;
+  userMessage: string;
+  assistantResponse: string;
+  isStreaming: boolean;
+  timestamp: Date;
+}

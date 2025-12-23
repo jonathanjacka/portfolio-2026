@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 
 interface InputBarProps {
   onSubmit?: (message: string) => void;
+  disabled?: boolean;
 }
 
-const InputBar: React.FC<InputBarProps> = ({ onSubmit }) => {
+const InputBar: React.FC<InputBarProps> = ({ onSubmit, disabled = false }) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleSubmit = () => {
     const trimmed = inputValue.trim();
-    if (trimmed && onSubmit) {
+    if (trimmed && onSubmit && !disabled) {
       onSubmit(trimmed);
       setInputValue('');
     }
@@ -30,14 +31,15 @@ const InputBar: React.FC<InputBarProps> = ({ onSubmit }) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder='Ask me something...'
+          placeholder={disabled ? 'Thinking...' : 'Ask me something...'}
           aria-label='Ask Jonathan a question'
-          className='flex-1 border-none outline-none text-base sm:text-lg bg-transparent text-base-content placeholder:text-base-content/50 px-2'
+          disabled={disabled}
+          className='flex-1 border-none outline-none text-base sm:text-lg bg-transparent text-base-content placeholder:text-base-content/50 px-2 disabled:cursor-not-allowed'
         />
         <button
           type='button'
           onClick={handleSubmit}
-          disabled={!inputValue.trim()}
+          disabled={!inputValue.trim() || disabled}
           aria-label='Send message'
           className='btn btn-primary btn-circle btn-sm sm:btn-md ml-2 disabled:opacity-50'
         >
